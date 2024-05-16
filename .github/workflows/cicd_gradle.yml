@@ -53,16 +53,16 @@ jobs:
   
     steps:
       - name: docker pull
-        run : sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/urbannest
+        run : docker pull ${{ secrets.DOCKERHUB_USERNAME }}/urbannest
   
       - name: docker stop container
         run: |
-          if [ $(sudo docker ps -a -q -f name=urbannest) ]; then
-            sudo docker stop urbannest
+          if [ $(docker ps -a -q -f name=urbannest) ]; then
+            docker stop urbannest
           fi
   
       - name: docker run new container
-        run: sudo docker run --rm -it -d -p 8080:8080 --name urbannest ${{ secrets.DOCKERHUB_USERNAME }}/urbannest
+        run: docker run --rm -it -d -p 8080:8080 --name urbannest ${{ secrets.DOCKERHUB_USERNAME }}/urbannest
   
       - name: delete old docker image
-        run: sudo docker system prune -f
+        run: docker system prune -f

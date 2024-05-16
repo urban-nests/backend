@@ -1,3 +1,7 @@
 spring:
   application:
     name: backend
+
+jasypt:
+  encryptor:
+    key: ${JASYPT_KEY}

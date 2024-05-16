@@ -2,6 +2,26 @@ spring:
   application:
     name: backend
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(9ErSvYBu5deFXj+OjAx6RCpeT8eVq26I1bofxrN3o7nwo4w0gL8u3xra4FrijGSHp+eDgx77pT0Kca4+A5GO9JYBJeIwrCAIm5GqbEzTf9ZMpezUiZYwHR3J7YFD3SkS)
+    username: ENC(LF3grdejR4h2BDQyB1yFzaMyzXgEqXnep+NQMq6iGzOiG7buPf23O24GEmbNlwbk)
+    password: ENC(LF3grdejR4h2BDQyB1yFzaMyzXgEqXnep+NQMq6iGzOiG7buPf23O24GEmbNlwbk)
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+
 jasypt:
   encryptor:
     key: ${JASYPT_KEY}
+
+logging:
+  level:
+    root: info
+    org.hibernate.type: trace
+    org.hibernate.SQL: debug

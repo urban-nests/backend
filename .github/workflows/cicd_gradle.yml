@@ -34,7 +34,7 @@ jobs:
 
     # Docker Image Build
     - name: docker image build
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/urbannest
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/urbannest .
 
     # DockerHub Login
     - name: docker login

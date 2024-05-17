@@ -49,7 +49,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: self-hosted
+    runs-on: linux
   
     steps:
       - name: docker pull

@@ -30,7 +30,7 @@ jobs:
 
     # Spring Boot Build
     - name: Build with Gradle Wrapper
-      run: ./gradlew clean build
+      run: ./gradlew clean build -Pjasypt.encryptor.key=${{secrets.JASYPT_KEY}}
 
     # Docker Image Build
     - name: docker image build

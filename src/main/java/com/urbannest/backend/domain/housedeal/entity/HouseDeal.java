@@ -1,5 +1,6 @@
 package com.urbannest.backend.domain.housedeal.entity;
 
+import com.urbannest.backend.domain.houseimage.entity.HouseImage;
 import com.urbannest.backend.domain.houseinfo.entity.HouseInfo;
 import com.urbannest.backend.domain.member.entity.Member;
 import com.urbannest.backend.global.entity.BaseTimeEntity;
@@ -8,6 +9,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -58,6 +61,9 @@ public class HouseDeal extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apt_code", nullable = false)
     private HouseInfo houseInfo;
+
+    @OneToMany(mappedBy = "houseDeal")
+    List<HouseImage> houseImageList;
 
     @Builder
     private HouseDeal(Long no, String dealAmount, Integer dealYear, Integer dealMonth, Integer dealDay, String area, String floor, String content, String cancelDealType, Long customerNo, HouseDealStatus status, Member member, HouseInfo houseInfo) {

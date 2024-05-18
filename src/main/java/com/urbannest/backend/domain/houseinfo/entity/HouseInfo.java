@@ -1,6 +1,7 @@
 package com.urbannest.backend.domain.houseinfo.entity;
 
 
+import com.urbannest.backend.domain.dongcode.entity.Dongcode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,7 +15,6 @@ import lombok.NoArgsConstructor;
 public class HouseInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "apt_code")
     private Long aptCode;
 
@@ -66,11 +66,14 @@ public class HouseInfo {
     @Column(name = "lat", length = 30)
     private String lat;
 
-    @Column(name = "dong_code", length = 20, nullable = false)
-    private String dongCode;
+//    @Column(name = "dong_code", length = 20, nullable = false)
+//    private String dongCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dong_code", referencedColumnName = "dong_code", nullable = false)
+    private Dongcode dongCode;
 
     @Builder
-    private HouseInfo(Long aptCode, Integer buildYear, String roadName, String roadNameBonbun, String roadNameBubun, String roadNameSeq, String roadNameBasementCode, String dong, String bonbun, String bubun, String sigunguCode, String eubmyundongCode, String landCode, String apartmentName, String jibun, String lng, String lat, String dongCode) {
+    private HouseInfo(Long aptCode, Integer buildYear, String roadName, String roadNameBonbun, String roadNameBubun, String roadNameSeq, String roadNameBasementCode, String dong, String bonbun, String bubun, String sigunguCode, String eubmyundongCode, String landCode, String apartmentName, String jibun, String lng, String lat, Dongcode dongCode) {
         this.aptCode = aptCode;
         this.buildYear = buildYear;
         this.roadName = roadName;

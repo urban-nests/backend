@@ -1,5 +1,7 @@
 package com.urbannest.backend.domain.housedeal.entity;
 
+import com.urbannest.backend.domain.houseinfo.entity.HouseInfo;
+import com.urbannest.backend.domain.member.entity.Member;
 import com.urbannest.backend.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -45,17 +47,20 @@ public class HouseDeal extends BaseTimeEntity {
     @Column(name = "customer_no")
     private Long customerNo;
 
-    @Column(name = "status", columnDefinition = "int default 0")
-    private Integer status; // ENUM으로 변경?? 0:거래중, 거래완료, 거래취소
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", nullable = false)
+    private HouseDealStatus status;
 
-    @Column(name = "member_no", nullable = false)
-    private Long memberNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_no", referencedColumnName = "no", nullable = false)
+    private Member member;
 
-    @Column(name = "apt_code", nullable = false)
-    private Long aptCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "apt_code", nullable = false)
+    private HouseInfo houseInfo;
 
     @Builder
-    private HouseDeal(Long no, String dealAmount, Integer dealYear, Integer dealMonth, Integer dealDay, String area, String floor, String content, String cancelDealType, Long customerNo, Integer status, Long memberNo, Long aptCode) {
+    private HouseDeal(Long no, String dealAmount, Integer dealYear, Integer dealMonth, Integer dealDay, String area, String floor, String content, String cancelDealType, Long customerNo, HouseDealStatus status, Member member, HouseInfo houseInfo) {
         this.no = no;
         this.dealAmount = dealAmount;
         this.dealYear = dealYear;
@@ -66,10 +71,8 @@ public class HouseDeal extends BaseTimeEntity {
         this.content = content;
         this.cancelDealType = cancelDealType;
         this.customerNo = customerNo;
-        this.status = status;
-        this.memberNo = memberNo;
-        this.aptCode = aptCode;
+        this.status = status != null ? status : HouseDealStatus.AVAILABLE;
+        this.member = member;
+        this.houseInfo = houseInfo;
     }
-
-    // Getters and Setters
 }

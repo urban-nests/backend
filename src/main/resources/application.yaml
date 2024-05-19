@@ -26,3 +26,4 @@ logging:
     root: info
     org.hibernate.type: trace
     org.hibernate.SQL: debug
+

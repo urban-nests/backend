@@ -1,6 +1,7 @@
 package com.urbannest.backend.domain.houseinfo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.urbannest.backend.domain.dongcode.entity.Dongcode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -66,10 +67,9 @@ public class HouseInfo {
     @Column(name = "lat", length = 30)
     private String lat;
 
-//    @Column(name = "dong_code", length = 20, nullable = false)
-//    private String dongCode;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dong_code", referencedColumnName = "dong_code", nullable = false)
+    @JsonIgnore
     private Dongcode dongCode;
 
     @Builder

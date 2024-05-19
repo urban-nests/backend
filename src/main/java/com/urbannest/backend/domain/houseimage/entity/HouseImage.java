@@ -1,5 +1,6 @@
 package com.urbannest.backend.domain.houseimage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.urbannest.backend.domain.housedeal.entity.HouseDeal;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -29,6 +30,7 @@ public class HouseImage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deal_no")
+    @JsonIgnore
     private HouseDeal houseDeal;
 
     @Builder

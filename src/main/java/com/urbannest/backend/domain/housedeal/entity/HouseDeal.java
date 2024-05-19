@@ -1,5 +1,6 @@
 package com.urbannest.backend.domain.housedeal.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.urbannest.backend.domain.houseimage.entity.HouseImage;
 import com.urbannest.backend.domain.houseinfo.entity.HouseInfo;
 import com.urbannest.backend.domain.member.entity.Member;
@@ -9,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class HouseDeal extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "no")
     private Long no;
+
+    @Column(name = "deal_no")
+    private Long deal_no;
 
     @Column(name = "deal_amount")
     private String dealAmount;
@@ -62,12 +67,14 @@ public class HouseDeal extends BaseTimeEntity {
     @JoinColumn(name = "apt_code", nullable = false)
     private HouseInfo houseInfo;
 
-    @OneToMany(mappedBy = "houseDeal")
+    @BatchSize(size = 20)
+    @OneToMany(mappedBy = "houseDeal", fetch = FetchType.LAZY)
     List<HouseImage> houseImageList;
 
     @Builder
-    private HouseDeal(Long no, String dealAmount, Integer dealYear, Integer dealMonth, Integer dealDay, String area, String floor, String content, String cancelDealType, Long customerNo, HouseDealStatus status, Member member, HouseInfo houseInfo) {
+    private HouseDeal(Long no, Long deal_no, String dealAmount, Integer dealYear, Integer dealMonth, Integer dealDay, String area, String floor, String content, String cancelDealType, Long customerNo, HouseDealStatus status, Member member, HouseInfo houseInfo, List<HouseImage> houseImageList) {
         this.no = no;
+        this.deal_no = deal_no;
         this.dealAmount = dealAmount;
         this.dealYear = dealYear;
         this.dealMonth = dealMonth;
@@ -77,8 +84,9 @@ public class HouseDeal extends BaseTimeEntity {
         this.content = content;
         this.cancelDealType = cancelDealType;
         this.customerNo = customerNo;
-        this.status = status != null ? status : HouseDealStatus.AVAILABLE;
+        this.status = status;
         this.member = member;
         this.houseInfo = houseInfo;
+        this.houseImageList = houseImageList;
     }
 }

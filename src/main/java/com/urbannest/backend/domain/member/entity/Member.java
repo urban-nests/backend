@@ -1,5 +1,6 @@
 package com.urbannest.backend.domain.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.urbannest.backend.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,11 +23,13 @@ public class Member extends BaseTimeEntity {
     private String email;
 
     @Column(nullable = false, length = 50)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false, length = 30)
     private String nickname;
 
+    @JsonIgnore
     private LocalDateTime deletedAt;
 
 

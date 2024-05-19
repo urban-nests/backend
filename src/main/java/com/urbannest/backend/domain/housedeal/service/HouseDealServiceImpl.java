@@ -37,7 +37,10 @@ public class HouseDealServiceImpl implements HouseDealService{
     }
 
     @Override
+    @Transactional
     public HouseDeal getHouseDeal(Long no) {
+        houseDealRepository.incrementHit(no);
+
         return houseDealRepository.findById(no)
                 .orElseThrow(() ->  new EntityNotFoundException("deal_no: " + no + " not found"));
     }

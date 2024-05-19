@@ -69,7 +69,6 @@ public class HouseInfo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dong_code", referencedColumnName = "dong_code", nullable = false)
-    @JsonIgnore
     private Dongcode dongCode;
 
     @Builder

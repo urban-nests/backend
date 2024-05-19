@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.urbannest.backend.domain.member.entity.Member;
 import com.urbannest.backend.domain.member.exception.MemberException;
+import com.urbannest.backend.domain.member.jwt.JwtDB;
+import com.urbannest.backend.domain.member.jwt.JwtGenerator;
 import com.urbannest.backend.domain.member.jwt.JwtToken;
 import com.urbannest.backend.domain.member.repository.MemberRepository;
 
@@ -19,6 +21,7 @@ public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final JwtGenerator jwtGenerator;
 
 	@Override
 	public void signup(Member member) {
@@ -44,11 +47,34 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member login(Member member) {
-		return null;
+		log.info("MemberService.login() is called");
+		Member entity = memberRepository.findByEmail(member.getEmail());
+
+//		log.warn(member.toString());
+//		log.warn(entity.toString());
+		if (entity == null) {
+			throw new MemberException("존재하지 않는 사용자");
+		}
+
+		if (!passwordEncoder.matches(member.getPassword(), entity.getPassword())) {
+			throw new MemberException("비밀번호 불일치");
+		}
+
+		return entity;
 	}
 
 	@Override
 	public JwtToken saveToken(Member member) {
-		return null;
+		log.info("MemberService.saveToken() is called.");
+		String accessToken = jwtGenerator.createAccessToken(member);
+		String refreshToken = jwtGenerator.createRefreshToken(member);
+
+		// 추후 Redis와 같은 TTL 설정 필요
+		JwtDB.JwtDB.put(member.getEmail() + ":access-token", accessToken);
+		JwtDB.JwtDB.put(member.getEmail() + ":refresh-token", refreshToken);
+//		log.warn(JwtDB.JwtDB.get(member.getEmail()+":access-token"));
+//		log.warn(JwtDB.JwtDB.get(member.getEmail()+":refresh-token"));
+
+		return new JwtToken(accessToken, refreshToken);
 	}
 }

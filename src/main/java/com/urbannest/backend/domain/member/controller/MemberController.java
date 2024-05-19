@@ -24,10 +24,6 @@ public class MemberController {
 	public MemberController(MemberService memberService) {
 		this.memberService = memberService;
 	}
-	@GetMapping("/signup")
-	public void a() {
-		log.info("a");
-	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody Member member) {
@@ -40,6 +36,8 @@ public class MemberController {
 
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody Member member) {
+		log.info("MemberController.login() is called");
+		log.warn(member.toString());
 		// 로그인
 		Member result = memberService.login(member);
 

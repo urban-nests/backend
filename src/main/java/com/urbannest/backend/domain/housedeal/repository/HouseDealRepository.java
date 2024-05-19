@@ -3,11 +3,14 @@ package com.urbannest.backend.domain.housedeal.repository;
 import com.urbannest.backend.domain.housedeal.dto.projection.DealIdWithMemberProjection;
 import com.urbannest.backend.domain.housedeal.dto.projection.SimpleHouseDealProjection;
 import com.urbannest.backend.domain.housedeal.entity.HouseDeal;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +27,7 @@ public interface HouseDealRepository extends JpaRepository<HouseDeal, Long> {
     Optional<HouseDeal> findById(@Param("id") Long id);
 
     @Modifying
+    @Transactional
     @Query("update HouseDeal hd set hd.hit=hd.hit+1 where hd.no=:id")
     void incrementHit(@Param("id") Long id);
 

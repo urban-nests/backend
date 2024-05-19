@@ -75,7 +75,6 @@ public class HouseDeal extends BaseTimeEntity {
     List<HouseImage> houseImageList;
 
     @Builder
-
     public HouseDeal(Long no, Long deal_no, String dealAmount, Integer dealYear, Integer dealMonth, Integer dealDay, String area, String floor, String content, Long hit, String cancelDealType, Long customerNo, HouseDealStatus status, Member member, HouseInfo houseInfo, List<HouseImage> houseImageList) {
         this.no = no;
         this.deal_no = deal_no;

@@ -2,6 +2,7 @@ package com.urbannest.backend.domain.housedeal.service;
 
 import com.urbannest.backend.domain.dongcode.entity.Dongcode;
 import com.urbannest.backend.domain.dongcode.repository.DongcodeRepository;
+import com.urbannest.backend.domain.housedeal.dto.HouseDealResponse;
 import com.urbannest.backend.domain.housedeal.dto.HouseDealSummary;
 import com.urbannest.backend.domain.housedeal.dto.HouseInfoDealRequest;
 import com.urbannest.backend.domain.housedeal.dto.projection.DealIdWithMemberProjection;
@@ -22,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -57,7 +57,7 @@ public class HouseDealServiceImpl implements HouseDealService{
 
     @Override
     @Transactional
-    public void createHouseDeal(HouseInfoDealRequest houseInfoDealRequest) {
+    public HouseDealResponse createHouseInfoDeal(HouseInfoDealRequest houseInfoDealRequest) {
         String dongCode = houseInfoDealRequest.getDongCode();
         Dongcode dongCodeEntity = dongcodeRepository.findById(dongCode).orElseThrow(() -> new EntityNotFoundException("dongCode not found"));
 
@@ -68,7 +68,8 @@ public class HouseDealServiceImpl implements HouseDealService{
         houseInfo = houseInfoRepository.save(houseInfo);
 
         HouseDeal houseDeal = houseInfoDealRequest.toHouseDeal(houseInfo, member, null);
-        houseDealRepository.save(houseDeal);
+        houseDeal = houseDealRepository.save(houseDeal);
+        return new HouseDealResponse(houseDeal.getNo(), houseDeal.getDeal_no());
     }
 
     private static List<HouseDealSummary> getHouseDealSummaries(List<SimpleHouseDealProjection> houseDeals, List<DealIdWithMemberProjection> members) {

@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.urbannest.backend.domain.member.constant.MemberType;
+
 @Service
 public class SocialLoginApiServiceFactory {
 
@@ -14,13 +16,13 @@ public class SocialLoginApiServiceFactory {
 		this.socialLoginApiServices = socialLoginApiServices;
 	}
 
-	public static SocialLoginApiService getSocialLoginApiService(String type) {
+	public static SocialLoginApiService getSocialLoginApiService(MemberType type) {
 		String socialLoginApiServiceBeanName = "";
 
-		if(type.equals("Kakao")) {
-			socialLoginApiServiceBeanName = "KakaoLoginApiServiceImpl";
+		if(type.KAKAO.equals(type)) {
+			socialLoginApiServiceBeanName = "kakaoLoginApiServiceImpl";
 		}
 
-		return 	socialLoginApiServices.get(socialLoginApiServiceBeanName);
+		return socialLoginApiServices.get(socialLoginApiServiceBeanName);
 	}
 }

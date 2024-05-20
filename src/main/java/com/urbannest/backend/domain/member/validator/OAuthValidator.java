@@ -9,8 +9,11 @@ import com.urbannest.backend.global.error.ErrorCode;
 import com.urbannest.backend.global.error.exception.AuthenticationException;
 import com.urbannest.backend.global.error.exception.BusinessException;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Service
+@Slf4j
 public class OAuthValidator {
 	public void validateAuthorization(String authorizationHeader) {
 		if (!StringUtils.hasText(authorizationHeader)) {
@@ -18,7 +21,7 @@ public class OAuthValidator {
 		}
 
 		String[] authorizations = authorizationHeader.split(" ");
-		if (authorizations.length < 2 || "Bearer".equals(authorizations[0])) {
+		if (authorizations.length < 2 || !"Bearer".equals(authorizations[0])) {
 			throw new AuthenticationException(ErrorCode.NOT_VALID_BEARER_GRANT_TYPE);
 		}
 	}

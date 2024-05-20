@@ -1,5 +1,7 @@
 package com.urbannest.backend.domain.member.service;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.urbannest.backend.domain.member.jwt.JwtDB;
 import com.urbannest.backend.domain.member.jwt.JwtGenerator;
 import com.urbannest.backend.domain.member.jwt.JwtToken;
 import com.urbannest.backend.domain.member.repository.MemberRepository;
+import com.urbannest.backend.global.error.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +28,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void signup(Member member) {
 		log.info("MemberService.signup() is called.");
-		if (memberRepository.findByEmail(member.getEmail()) != null) {
-			throw new MemberException("중복된 이메일");
+		if (memberRepository.findByEmail(member.getEmail()).isPresent()) {
+			throw new MemberException(ErrorCode.ALREADY_REGISTERED_MEMBER);
 		}
 
 		String encryptedPassword = passwordEncoder.encode(member.getPassword());
@@ -36,30 +39,25 @@ public class MemberServiceImpl implements MemberService {
 			.password(encryptedPassword)
 			.build();
 
-		try {
-			memberRepository.save(entity);
-		}
-		catch (Exception e) {
-			throw new MemberException("회원가입 실패");
-		}
+		memberRepository.save(entity);
 	}
 
 	@Override
 	public Member login(Member member) {
 		log.info("MemberService.login() is called");
-		Member entity = memberRepository.findByEmail(member.getEmail());
+		Optional<Member> entity = memberRepository.findByEmail(member.getEmail());
 
 //		log.warn(member.toString());
 //		log.warn(entity.toString());
-		if (entity == null) {
-			throw new MemberException("존재하지 않는 사용자");
+		if (entity.isEmpty()) {
+			throw new MemberException(ErrorCode.NOT_REGISTERED_MEMBER);
 		}
 
-		if (!passwordEncoder.matches(member.getPassword(), entity.getPassword())) {
-			throw new MemberException("비밀번호 불일치");
+		if (!passwordEncoder.matches(member.getPassword(), entity.get().getPassword())) {
+			throw new MemberException(ErrorCode.PASSWORD_ASSERTION);
 		}
 
-		return entity;
+		return entity.get();
 	}
 
 	@Override
@@ -75,5 +73,9 @@ public class MemberServiceImpl implements MemberService {
 //		log.warn(JwtDB.JwtDB.get(member.getEmail()+":refresh-token"));
 
 		return new JwtToken(accessToken, refreshToken);
+	}
+
+	public Optional<Member> findMemberByEmail(String email) {
+		return memberRepository.findByEmail(email);
 	}
 }

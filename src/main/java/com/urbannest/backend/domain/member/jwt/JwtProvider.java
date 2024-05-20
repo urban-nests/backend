@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtProvider {
 	private final Key key;
+	public static final String Authorization = "Authorization";
 
 	public JwtProvider(@Value("${jwt.key}") String key) {
 		byte[] keyBytes = Decoders.BASE64.decode(key);
@@ -33,10 +34,10 @@ public class JwtProvider {
 	}
 
 	// JWT 복호화 후, 데이터 반환
-	public Authentication getAuthentication(String acessToken) {
+	public Authentication getAuthentication(String accessToken) {
 
 		// JWT 복호화
-		Claims claims = parseClaims(acessToken);
+		Claims claims = parseClaims(accessToken);
 
 		if(claims.get("auth") == null) {
 			throw new RuntimeException("권한 정보가 없는 토큰입니다.");

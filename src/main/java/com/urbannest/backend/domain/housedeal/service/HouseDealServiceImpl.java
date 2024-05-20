@@ -51,7 +51,7 @@ public class HouseDealServiceImpl implements HouseDealService{
     public HouseDeal getHouseDeal(Long no) {
         houseDealRepository.incrementHit(no);
 
-        return houseDealRepository.findById(no)
+        return houseDealRepository.findDetailById(no)
                 .orElseThrow(() ->  new EntityNotFoundException("deal_no: " + no + " not found"));
     }
 

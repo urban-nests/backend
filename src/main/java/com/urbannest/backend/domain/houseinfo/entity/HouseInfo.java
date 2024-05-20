@@ -37,6 +37,9 @@ public class HouseInfo {
     @Column(name = "road_name_basement_code", length = 1)
     private String roadNameBasementCode;
 
+    @Column(name = "road_name_code", length = 7)
+    private String roadNameCode;
+
     @Column(name = "dong", length = 40)
     private String dong;
 
@@ -72,7 +75,7 @@ public class HouseInfo {
     private Dongcode dongCode;
 
     @Builder
-    private HouseInfo(Long aptCode, Integer buildYear, String roadName, String roadNameBonbun, String roadNameBubun, String roadNameSeq, String roadNameBasementCode, String dong, String bonbun, String bubun, String sigunguCode, String eubmyundongCode, String landCode, String apartmentName, String jibun, String lng, String lat, Dongcode dongCode) {
+    private HouseInfo(Long aptCode, Integer buildYear, String roadName, String roadNameBonbun, String roadNameBubun, String roadNameSeq, String roadNameBasementCode, String roadNameCode, String dong, String bonbun, String bubun, String sigunguCode, String eubmyundongCode, String landCode, String apartmentName, String jibun, String lng, String lat, Dongcode dongCode) {
         this.aptCode = aptCode;
         this.buildYear = buildYear;
         this.roadName = roadName;
@@ -80,6 +83,7 @@ public class HouseInfo {
         this.roadNameBubun = roadNameBubun;
         this.roadNameSeq = roadNameSeq;
         this.roadNameBasementCode = roadNameBasementCode;
+        this.roadNameCode = roadNameCode;
         this.dong = dong;
         this.bonbun = bonbun;
         this.bubun = bubun;

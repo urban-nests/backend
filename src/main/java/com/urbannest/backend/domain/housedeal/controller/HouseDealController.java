@@ -1,8 +1,10 @@
 package com.urbannest.backend.domain.housedeal.controller;
 
 import com.urbannest.backend.domain.housedeal.dto.HouseDealSummary;
+import com.urbannest.backend.domain.housedeal.dto.HouseInfoDealRequest;
 import com.urbannest.backend.domain.housedeal.entity.HouseDeal;
 import com.urbannest.backend.domain.housedeal.service.HouseDealService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +39,11 @@ public class HouseDealController {
     public ResponseEntity<?> getHouseDeal(@PathVariable("no") Long no) {
         HouseDeal houseDeal = houseDealService.getHouseDeal(no);
         return ResponseEntity.ok(houseDeal);
+    }
+
+    @PostMapping("/housedeal")
+    public ResponseEntity<?> createHouseInfoDeal(@RequestBody HouseInfoDealRequest houseInfoDealRequest) {
+        houseDealService.createHouseDeal(houseInfoDealRequest);
+        return ResponseEntity.ok().build();
     }
 }

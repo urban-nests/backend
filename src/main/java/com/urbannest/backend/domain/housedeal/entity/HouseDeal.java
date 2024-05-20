@@ -49,6 +49,9 @@ public class HouseDeal extends BaseTimeEntity {
     @Column(name = "content", length = 1000)
     private String content;
 
+    @Column(name = "hit")
+    private Long hit;
+
     @Column(name = "cancel_deal_type")
     private String cancelDealType;
 
@@ -72,7 +75,7 @@ public class HouseDeal extends BaseTimeEntity {
     List<HouseImage> houseImageList;
 
     @Builder
-    private HouseDeal(Long no, Long deal_no, String dealAmount, Integer dealYear, Integer dealMonth, Integer dealDay, String area, String floor, String content, String cancelDealType, Long customerNo, HouseDealStatus status, Member member, HouseInfo houseInfo, List<HouseImage> houseImageList) {
+    public HouseDeal(Long no, Long deal_no, String dealAmount, Integer dealYear, Integer dealMonth, Integer dealDay, String area, String floor, String content, Long hit, String cancelDealType, Long customerNo, HouseDealStatus status, Member member, HouseInfo houseInfo, List<HouseImage> houseImageList) {
         this.no = no;
         this.deal_no = deal_no;
         this.dealAmount = dealAmount;
@@ -82,6 +85,7 @@ public class HouseDeal extends BaseTimeEntity {
         this.area = area;
         this.floor = floor;
         this.content = content;
+        this.hit = hit;
         this.cancelDealType = cancelDealType;
         this.customerNo = customerNo;
         this.status = status;

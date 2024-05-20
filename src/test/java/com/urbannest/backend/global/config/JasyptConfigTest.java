@@ -19,7 +19,7 @@ class JasyptConfigTest {
     @DisplayName("origin string의 암,복호화 결과를 확인한다.")
     void stringEncryptor() {
 
-        String originString = "string";
+        String originString = "dshfsdfhsdftbubuninuvftcrex5ec";
 
         // 암호화
         String encryptedString = encryptor.encrypt(originString);

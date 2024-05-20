@@ -1,6 +1,7 @@
 package com.urbannest.backend.domain.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.urbannest.backend.domain.member.entity.Member;
+import com.urbannest.backend.domain.member.jwt.JwtProvider;
 import com.urbannest.backend.domain.member.jwt.JwtToken;
 import com.urbannest.backend.domain.member.serive.MemberService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -35,7 +39,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody Member member) {
+	public ResponseEntity<?> login(@RequestBody Member member, HttpServletResponse response) {
 		log.info("MemberController.login() is called");
 		log.warn(member.toString());
 		// 로그인
@@ -47,7 +51,14 @@ public class MemberController {
 			token = memberService.saveToken(member);
 		}
 
+		// RFC5719에 따라 Jwt는 Authorization Header에 포함하기로 합의
+		response.addHeader(JwtProvider.Authorization, "Bearer " + token.accessToken());
+		Cookie cookie = new Cookie("refresh-token", token.refreshToken());
+		cookie.setHttpOnly(true);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+
 		// token만 반환해도 되는가?
-		return ResponseEntity.ok(token);
+		return ResponseEntity.ok("로그인 성공");
 	}
 }

@@ -44,6 +44,10 @@ dependencies {
 
 	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// Spring Cloud Open Feign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.1'
+
 }
 
 tasks.named('test') {

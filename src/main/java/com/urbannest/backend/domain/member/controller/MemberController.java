@@ -1,7 +1,8 @@
 package com.urbannest.backend.domain.member.controller;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.urbannest.backend.domain.member.entity.Member;
+import com.urbannest.backend.domain.member.jwt.JwtDB;
 import com.urbannest.backend.domain.member.jwt.JwtProvider;
 import com.urbannest.backend.domain.member.jwt.JwtToken;
-import com.urbannest.backend.domain.member.serive.MemberService;
+import com.urbannest.backend.domain.member.service.MemberService;
+import com.urbannest.backend.global.resolver.member.MemberDto;
+import com.urbannest.backend.global.resolver.member.MemberInfo;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +39,6 @@ public class MemberController {
 		log.info("MemberController.signup() is called.");
 		memberService.signup(member);
 
-		// Response Object에 대한 고민 필요
 		return ResponseEntity.ok("회원가입 성공");
 	}
 
@@ -58,7 +62,35 @@ public class MemberController {
 		cookie.setPath("/");
 		response.addCookie(cookie);
 
-		// token만 반환해도 되는가?
 		return ResponseEntity.ok("로그인 성공");
+	}
+
+	@GetMapping("/memberinfo")
+	public MemberDto getInfo(@MemberInfo MemberDto memberDto) {
+		return memberDto;
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+		String refreshToken = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			refreshToken =  Arrays.stream(cookies)
+				.filter(cookie -> cookie.getName().equals("refresh-token"))
+				.map(Cookie::getValue)
+				.findFirst()
+				.orElse(null);
+		}
+
+		if (refreshToken != null) {
+			JwtDB.JwtDB.remove(refreshToken);
+
+			// 쿠키 삭제
+			Cookie cookie = new Cookie("refresh-token", null);
+			cookie.setMaxAge(0);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}
+		return ResponseEntity.ok("로그아웃 성공");
 	}
 }

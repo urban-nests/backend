@@ -22,7 +22,7 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, length = 50)
     private String email;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
 //    @JsonIgnore
     private String password;
 
@@ -40,4 +40,6 @@ public class Member extends BaseTimeEntity {
         this.password = password;
         this.nickname = nickname;
     }
+
+
 }

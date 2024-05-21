@@ -2,6 +2,7 @@ package com.urbannest.backend.domain.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,8 @@ import com.urbannest.backend.domain.member.entity.Member;
 import com.urbannest.backend.domain.member.jwt.JwtProvider;
 import com.urbannest.backend.domain.member.jwt.JwtToken;
 import com.urbannest.backend.domain.member.service.MemberService;
+import com.urbannest.backend.global.resolver.member.MemberDto;
+import com.urbannest.backend.global.resolver.member.MemberInfo;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -58,5 +61,10 @@ public class MemberController {
 
 		// token만 반환해도 되는가?
 		return ResponseEntity.ok("로그인 성공");
+	}
+
+	@GetMapping("/memberinfo")
+	public MemberDto getInfo(@MemberInfo MemberDto memberDto) {
+		return memberDto;
 	}
 }

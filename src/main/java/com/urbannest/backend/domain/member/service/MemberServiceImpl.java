@@ -67,8 +67,8 @@ public class MemberServiceImpl implements MemberService {
 		String refreshToken = jwtGenerator.createRefreshToken(member);
 
 		// 추후 Redis와 같은 TTL 설정 필요
-		JwtDB.JwtDB.put(member.getEmail() + ":access-token", accessToken);
-		JwtDB.JwtDB.put(member.getEmail() + ":refresh-token", refreshToken);
+//		JwtDB.JwtDB.put(accessToken, member);
+		JwtDB.JwtDB.put(refreshToken, member);
 //		log.warn(JwtDB.JwtDB.get(member.getEmail()+":access-token"));
 //		log.warn(JwtDB.JwtDB.get(member.getEmail()+":refresh-token"));
 

@@ -1,7 +1,11 @@
 package com.urbannest.backend.domain.member.exception;
 
-public class MemberException extends RuntimeException {
-	public MemberException(String msg) {
-		super(msg);
+import com.urbannest.backend.global.error.ErrorCode;
+import com.urbannest.backend.global.error.exception.BusinessException;
+
+public class MemberException extends BusinessException {
+	public MemberException(ErrorCode errorCode) {
+
+		super(errorCode);
 	}
 }

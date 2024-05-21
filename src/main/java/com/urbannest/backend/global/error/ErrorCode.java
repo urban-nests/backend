@@ -13,7 +13,8 @@ public enum ErrorCode {
 	INVALID_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "005", "잘못된 회원 타입"),
 	ALREADY_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "006", "이미 존재하는 사용자"),
 	NOT_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "007", "존재하지 않는 사용자"),
-	PASSWORD_ASSERTION(HttpStatus.BAD_REQUEST, "008", "비밀번호 불일치");
+	PASSWORD_ASSERTION(HttpStatus.BAD_REQUEST, "008", "비밀번호 불일치"),
+	REFRESH_NOT_FOUND(HttpStatus.UNAUTHORIZED, "009", "유효하지 않은 refresh-token");
 
 
 	ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

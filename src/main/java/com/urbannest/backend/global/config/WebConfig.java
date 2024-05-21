@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 import com.urbannest.backend.global.interceptor.AuthenticationInterceptor;
+import com.urbannest.backend.global.resolver.member.MemberArgumentResolver;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
     private final AuthenticationInterceptor authenticationInterceptor;
+    private final MemberArgumentResolver memberArgumentResolver;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -33,5 +35,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new ValidatingPageableArgumentResolver());
+        resolvers.add(memberArgumentResolver);
     }
+
+
+
 }

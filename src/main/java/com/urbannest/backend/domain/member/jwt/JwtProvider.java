@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 
 import io.jsonwebtoken.Claims;
@@ -24,6 +25,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class JwtProvider {
 	private final Key key;
 	public static final String Authorization = "Authorization";
@@ -60,6 +62,7 @@ public class JwtProvider {
 				.setSigningKey(key)
 				.build()
 				.parseClaimsJws(token);
+
 			return true;
 		}
 		catch (SecurityException | MalformedJwtException e) {
@@ -76,7 +79,8 @@ public class JwtProvider {
 
 
 	//
-	private Claims parseClaims(String accessToken) {
+	public Claims parseClaims(String accessToken) {
+		log.info(accessToken);
 		try {
 			return Jwts.parserBuilder()
 				.setSigningKey(key)

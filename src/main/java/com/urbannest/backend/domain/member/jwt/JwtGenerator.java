@@ -34,7 +34,7 @@ public class JwtGenerator {
 		claims.put("nickname", member.getNickname());
 
 		Date now = new Date();
-		Date expiration = new Date(now.getTime() + (1000L*60*30));
+		Date expiration = new Date(now.getTime() + (1000L*60*15));
 
 		String token = Jwts.builder()
 			.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -52,7 +52,7 @@ public class JwtGenerator {
 		claims.put("email", member.getEmail());
 
 		Date now = new Date();
-		Date expiration = new Date(now.getTime() + (1000L*60*60));
+		Date expiration = new Date(now.getTime() + (1000L*60*60*24));
 
 		String token = Jwts.builder()
 			.setHeaderParam(Header.TYPE, Header.JWT_TYPE)

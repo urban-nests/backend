@@ -30,9 +30,22 @@ logging:
 jwt:
   key: ENC(SFzMRlkdgp5cdknU5Jbq6q3YCh3i4UJKCz0gJsgpG2zQnOfqTRlwbQcDfVlN3VNP8ID25ATJEzy60Jd+WwAgislVNlSH0rsB38QfmD5XPhb0O25F1wsYmkC7rFn+Uij9XYkAKM05ATT6cHXy0TKiOxeCseeKpaIAorieYjUS+9Wmet4YOOUyIMnCZix0zvx7)
 
+
 urban-nest:
   image:
     max-cnt: 20
     max-size: 10485760 #1024*1024*10 => 10MB
     save-path:
       local: ENC(bZhLo4VlQc6zytBWxWrn3bPRmA6RW4o1GJ7lc8vxPGbzvOixVDC/jFh4KJtBM/R7x8vD3zyA7zWhQf+Le0UaeSgvvhNKb2K0oGHepBZvShJ1eQDahabuz3RcqxChOMzL)
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+
+kakao:
+  client:
+    id: 419cc86098a7b157b129c35609e3fc5a
+    secret: wbgzBDDvIg84Gv3NZmjZn07gsQDoJdeB

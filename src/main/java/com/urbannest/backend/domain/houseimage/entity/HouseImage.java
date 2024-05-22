@@ -22,6 +22,9 @@ public class HouseImage {
     @Column(name = "original_name", length = 100)
     private String originalName;
 
+    @Column(name = "extension", length = 10)
+    private String extension;
+
     @Column(name = "file_name", length = 200)
     private String fileName;
 
@@ -34,11 +37,19 @@ public class HouseImage {
     private HouseDeal houseDeal;
 
     @Builder
-    private HouseImage(Long no, String originalName, String fileName, String filePath, HouseDeal houseDeal) {
+    public HouseImage(Long no, String originalName, String extension, String fileName, String filePath, HouseDeal houseDeal) {
         this.no = no;
         this.originalName = originalName;
-        this.fileName = fileName;
         this.filePath = filePath;
+        this.fileName = fileName;
+        this.extension = extension;
+        this.houseDeal = houseDeal;
+    }
+
+    public void setHouseDeal(HouseDeal houseDeal) {
+        if (houseDeal == null) {
+            throw new IllegalArgumentException("HouseDeal cannot be null");
+        }
         this.houseDeal = houseDeal;
     }
 }

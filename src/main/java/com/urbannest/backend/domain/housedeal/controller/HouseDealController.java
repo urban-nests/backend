@@ -1,13 +1,12 @@
 package com.urbannest.backend.domain.housedeal.controller;
 
+import com.urbannest.backend.domain.housedeal.dto.HouseDealResponse;
 import com.urbannest.backend.domain.housedeal.dto.HouseDealSummary;
+import com.urbannest.backend.domain.housedeal.dto.HouseInfoDealRequest;
 import com.urbannest.backend.domain.housedeal.entity.HouseDeal;
 import com.urbannest.backend.domain.housedeal.service.HouseDealService;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.SortDirection;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -37,5 +36,11 @@ public class HouseDealController {
     public ResponseEntity<?> getHouseDeal(@PathVariable("no") Long no) {
         HouseDeal houseDeal = houseDealService.getHouseDeal(no);
         return ResponseEntity.ok(houseDeal);
+    }
+
+    @PostMapping("/housedeal")
+    public ResponseEntity<?> createHouseInfoDeal(@RequestBody HouseInfoDealRequest houseInfoDealRequest) {
+        HouseDealResponse houseDealResponse = houseDealService.createHouseInfoDeal(houseInfoDealRequest);
+        return ResponseEntity.ok(houseDealResponse);
     }
 }

@@ -30,6 +30,7 @@ logging:
 jwt:
   key: ENC(SFzMRlkdgp5cdknU5Jbq6q3YCh3i4UJKCz0gJsgpG2zQnOfqTRlwbQcDfVlN3VNP8ID25ATJEzy60Jd+WwAgislVNlSH0rsB38QfmD5XPhb0O25F1wsYmkC7rFn+Uij9XYkAKM05ATT6cHXy0TKiOxeCseeKpaIAorieYjUS+9Wmet4YOOUyIMnCZix0zvx7)
 
+
 urban-nest:
   image:
     max-cnt: 20

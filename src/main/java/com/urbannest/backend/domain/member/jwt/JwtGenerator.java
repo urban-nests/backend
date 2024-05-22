@@ -22,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtGenerator {
 	private final Key key;
+	public static final long ACCESS_TOKEN_TTL = 1000L*60*15;
+	public static final long REFRESH_TOKEN_TTL =1000L*60*60*24;
 
 	public JwtGenerator(@Value("${jwt.key}") String key) {
 		byte[] keyBytes = Decoders.BASE64.decode(key);
@@ -34,7 +36,7 @@ public class JwtGenerator {
 		claims.put("nickname", member.getNickname());
 
 		Date now = new Date();
-		Date expiration = new Date(now.getTime() + (1000L*60*15));
+		Date expiration = new Date(now.getTime() + ACCESS_TOKEN_TTL);
 
 		String token = Jwts.builder()
 			.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -52,7 +54,7 @@ public class JwtGenerator {
 		claims.put("email", member.getEmail());
 
 		Date now = new Date();
-		Date expiration = new Date(now.getTime() + (1000L*60*60*24));
+		Date expiration = new Date(now.getTime() + REFRESH_TOKEN_TTL);
 
 		String token = Jwts.builder()
 			.setHeaderParam(Header.TYPE, Header.JWT_TYPE)

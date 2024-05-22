@@ -2,7 +2,6 @@ package com.urbannest.backend.domain.member.controller;
 
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.urbannest.backend.domain.member.entity.Member;
-import com.urbannest.backend.domain.member.jwt.JwtDB;
+import com.urbannest.backend.domain.member.entity.RefreshToken;
 import com.urbannest.backend.domain.member.jwt.JwtProvider;
 import com.urbannest.backend.domain.member.jwt.JwtToken;
+import com.urbannest.backend.domain.member.repository.RefreshTokenRepository;
 import com.urbannest.backend.domain.member.service.MemberService;
 import com.urbannest.backend.global.resolver.member.MemberDto;
 import com.urbannest.backend.global.resolver.member.MemberInfo;
@@ -21,18 +21,17 @@ import com.urbannest.backend.global.resolver.member.MemberInfo;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/member")
 @Slf4j
+@RequiredArgsConstructor
 public class MemberController {
-	private MemberService memberService;
+	private final MemberService memberService;
+	private final RefreshTokenRepository refreshTokenRepository;
 
-	@Autowired
-	public MemberController(MemberService memberService) {
-		this.memberService = memberService;
-	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody Member member) {
@@ -50,9 +49,9 @@ public class MemberController {
 		Member result = memberService.login(member);
 
 		JwtToken token = null;
-		if(result != null) { // 로그인 성공
+		if (result != null) { // 로그인 성공
 			// 토큰 생성
-			token = memberService.saveToken(member);
+			token = memberService.saveToken(result);
 		}
 
 		// RFC5719에 따라 Jwt는 Authorization Header에 포함하기로 합의
@@ -75,7 +74,7 @@ public class MemberController {
 		String refreshToken = null;
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
-			refreshToken =  Arrays.stream(cookies)
+			refreshToken = Arrays.stream(cookies)
 				.filter(cookie -> cookie.getName().equals("refresh-token"))
 				.map(Cookie::getValue)
 				.findFirst()
@@ -83,7 +82,8 @@ public class MemberController {
 		}
 
 		if (refreshToken != null) {
-			JwtDB.JwtDB.remove(refreshToken);
+//			JwtDB.JwtDB.remove(refreshToken);
+			refreshTokenRepository.delete(RefreshToken.builder().refreshToken(refreshToken).build());
 
 			// 쿠키 삭제
 			Cookie cookie = new Cookie("refresh-token", null);

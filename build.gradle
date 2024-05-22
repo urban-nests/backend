@@ -48,6 +48,10 @@ dependencies {
 	// Spring Cloud Open Feign
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.1'
 
+	// Redis
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.2.5'
+
+
 }
 
 tasks.named('test') {

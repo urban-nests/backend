@@ -34,6 +34,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 		HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 		String authorizationHeader = request.getHeader("Authorization");
 		String accessToken = authorizationHeader.split(" ")[1];
+		log.info(accessToken);
 		Claims claims = jwtProvider.parseClaims(accessToken);
 		String email = claims.get("email").toString();
 		String nickname = claims.get("nickname").toString();

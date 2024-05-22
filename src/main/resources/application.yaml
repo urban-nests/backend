@@ -16,6 +16,11 @@ spring:
       hibernate:
         format_sql: true
 
+  redis:
+    host: givendragon.iptime.org
+    port: 6379
+    password: hyunuk1111
+
 
 jasypt:
   encryptor:

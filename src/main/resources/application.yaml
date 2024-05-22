@@ -17,9 +17,9 @@ spring:
         format_sql: true
 
   redis:
-    host: givendragon.iptime.org
+    host: ENC(mlamO52Aq4UTHfJneP50K+PpZ+qpj0acTf25ATziku7vUzUYYAEJ34rUXYklMCW8hpVPBB25xe7jtxK7XtBzNg==)
     port: 6379
-    password: hyunuk1111
+    password: ENC(5cCIhYh6AIENQIfr7verUrRMwxL8T152nOE9K2Rz1BkxX7Uj2xNXQcUCDsHtvB4v)
 
 
 jasypt:

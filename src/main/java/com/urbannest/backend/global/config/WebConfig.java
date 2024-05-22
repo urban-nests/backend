@@ -1,5 +1,6 @@
 package com.urbannest.backend.global.config;
 
+import com.urbannest.backend.global.interceptor.DoubleSubmitCookieCheckInterceptor;
 import com.urbannest.backend.global.interceptor.RefererCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -20,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
     private final RefererCheckInterceptor refererCheckInterceptor;
     private final AuthenticationInterceptor authenticationInterceptor;
     private final MemberArgumentResolver memberArgumentResolver;
+    private final DoubleSubmitCookieCheckInterceptor doubleSubmitCookieCheckInterceptor;
 
 
     @Override
@@ -33,10 +35,14 @@ public class WebConfig implements WebMvcConfigurer {
                 "/api/oauth/login",
                 "/api/access-token/issue",
                 "/api/member/logout");
-        registry.addInterceptor(refererCheckInterceptor)
-                .order(2)
-                .excludePathPatterns("", "/", "api/login")
-                .addPathPatterns("/api/**");
+//        registry.addInterceptor(refererCheckInterceptor)
+//                .order(2)
+//                .excludePathPatterns("", "/", "api/login")
+//                .addPathPatterns("/api/**");
+//        registry.addInterceptor(doubleSubmitCookieCheckInterceptor)
+//                .order(3)
+//                .excludePathPatterns("", "/", "api/login")
+//                .addPathPatterns("/api/**");
     }
 
     @Override

@@ -1,32 +1,32 @@
-package com.urbannest.backend.domain.reservation.service;
-
-import com.urbannest.backend.domain.reservation.dto.ReservationRequest;
-import com.urbannest.backend.domain.reservation.entity.Reservation;
-import com.urbannest.backend.domain.reservation.repository.ReservationRepository;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
-
-@SpringBootTest
-class ReservationServiceImplTest {
-
-    private static final Logger log = LoggerFactory.getLogger(ReservationServiceImplTest.class);
-    @Autowired
-    private ReservationService reservationService;
-    @Autowired
-    private ReservationRepository reservationRepository;
-
+//package com.urbannest.backend.domain.reservation.service;
+//
+//import com.urbannest.backend.domain.reservation.dto.ReservationRequest;
+//import com.urbannest.backend.domain.reservation.entity.Reservation;
+//import com.urbannest.backend.domain.reservation.repository.ReservationRepository;
+//import org.assertj.core.api.Assertions;
+//import org.junit.jupiter.api.Test;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.transaction.annotation.Transactional;
+//
+//import java.time.LocalDate;
+//import java.util.Optional;
+//import java.util.concurrent.CountDownLatch;
+//import java.util.concurrent.ExecutorService;
+//import java.util.concurrent.Executors;
+//import java.util.concurrent.atomic.AtomicInteger;
+//
+//@SpringBootTest
+//class ReservationServiceImplTest {
+//
+//    private static final Logger log = LoggerFactory.getLogger(ReservationServiceImplTest.class);
+//    @Autowired
+//    private ReservationService reservationService;
+//    @Autowired
+//    private ReservationRepository reservationRepository;
+//
 //    @Test
 //    @Transactional
 //    void toggleReservation() throws InterruptedException {
@@ -63,4 +63,4 @@ class ReservationServiceImplTest {
 //        Optional<Reservation> reservation = reservationRepository.findByDateAndHouseDealNo(req.date(), req.dealId());
 //        Assertions.assertThat(reservation.isPresent()).isTrue();
 //    }
-}
+//}

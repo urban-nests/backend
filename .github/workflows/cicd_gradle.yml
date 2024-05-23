@@ -62,7 +62,7 @@ jobs:
           fi
   
       - name: docker run new container
-        run: docker run --rm -it -d -p 8080:8080 --name urbannest ${{ secrets.DOCKERHUB_USERNAME }}/urbannest
+        run: docker run --rm -it -d -p 8080:8080 --name urbannest ${{ secrets.DOCKERHUB_USERNAME }}/urbannest --JASYPT_KEY=${{secrets.JASYPT_KEY}}
   
       - name: delete old docker image
         run: docker system prune -f

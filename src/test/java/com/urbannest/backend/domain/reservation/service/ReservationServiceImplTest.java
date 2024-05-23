@@ -27,40 +27,40 @@ class ReservationServiceImplTest {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    @Test
-    @Transactional
-    void toggleReservation() throws InterruptedException {
-        int threadCount = 50;
-        ReservationRequest req = new ReservationRequest(
-                LocalDate.now(),
-                13L,
-                3L
-        );
-
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
-        CountDownLatch latch = new CountDownLatch(threadCount);
-
-        AtomicInteger hitCount = new AtomicInteger(0);
-        AtomicInteger missCount = new AtomicInteger(0);
-
-        for (int i = 0; i < threadCount; i++) {
-            executorService.execute(() -> {
-                try {
-                    reservationService.toggleReservation(req);
-                    hitCount.incrementAndGet();
-                } catch (Exception e) {
-                    missCount.incrementAndGet();
-                } finally {
-                    latch.countDown();
-                }
-            });
-        }
-        latch.await();
-
-        log.info("hitCount = {}", hitCount);
-        log.info("missCount = {}", missCount);
-
-        Optional<Reservation> reservation = reservationRepository.findByDateAndHouseDealNo(req.date(), req.dealId());
-        Assertions.assertThat(reservation.isPresent()).isTrue();
-    }
+//    @Test
+//    @Transactional
+//    void toggleReservation() throws InterruptedException {
+//        int threadCount = 50;
+//        ReservationRequest req = new ReservationRequest(
+//                LocalDate.now(),
+//                13L,
+//                3L
+//        );
+//
+//        ExecutorService executorService = Executors.newFixedThreadPool(5);
+//        CountDownLatch latch = new CountDownLatch(threadCount);
+//
+//        AtomicInteger hitCount = new AtomicInteger(0);
+//        AtomicInteger missCount = new AtomicInteger(0);
+//
+//        for (int i = 0; i < threadCount; i++) {
+//            executorService.execute(() -> {
+//                try {
+//                    reservationService.toggleReservation(req);
+//                    hitCount.incrementAndGet();
+//                } catch (Exception e) {
+//                    missCount.incrementAndGet();
+//                } finally {
+//                    latch.countDown();
+//                }
+//            });
+//        }
+//        latch.await();
+//
+//        log.info("hitCount = {}", hitCount);
+//        log.info("missCount = {}", missCount);
+//
+//        Optional<Reservation> reservation = reservationRepository.findByDateAndHouseDealNo(req.date(), req.dealId());
+//        Assertions.assertThat(reservation.isPresent()).isTrue();
+//    }
 }

@@ -2,7 +2,11 @@ package com.urbannest.backend.global.config;
 
 import com.urbannest.backend.global.interceptor.DoubleSubmitCookieCheckInterceptor;
 import com.urbannest.backend.global.interceptor.RefererCheckInterceptor;
+
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -51,6 +55,9 @@ public class WebConfig implements WebMvcConfigurer {
         resolvers.add(memberArgumentResolver);
     }
 
-
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+        return restTemplateBuilder.build();
+    }
 
 }

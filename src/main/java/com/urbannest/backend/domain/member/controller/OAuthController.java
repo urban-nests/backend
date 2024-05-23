@@ -32,20 +32,21 @@ public class OAuthController {
 	@PostMapping("/login")
 	public ResponseEntity<?> oauthLogin(@RequestBody OAuthLoginDto.Request oauthLoginRequestDto,
 															 HttpServletRequest request, HttpServletResponse response) {
-		String authorizationHeader = request.getHeader("Authorization");
-		log.warn(authorizationHeader);
-		oAuthValidator.validateAuthorization(authorizationHeader);
-		oAuthValidator.validateMemberType(oauthLoginRequestDto.getMemberType());
-
-		String accessToken = authorizationHeader.split(" ")[1];
-		JwtToken token = oAuthLoginService.oAuthLogin(accessToken, MemberType.from(oauthLoginRequestDto.getMemberType()));
-
-		response.addHeader(JwtProvider.Authorization, "Bearer " + token.accessToken());
-		Cookie cookie = new Cookie("refresh-token", token.refreshToken());
-		cookie.setHttpOnly(true);
-		cookie.setPath("/");
-		response.addCookie(cookie);
-
-		return ResponseEntity.ok("소셜 로그인 성공");
+//		String authorizationHeader = request.getHeader("Authorization");
+//		log.warn(authorizationHeader);
+//		oAuthValidator.validateAuthorization(authorizationHeader);
+//		oAuthValidator.validateMemberType(oauthLoginRequestDto.getMemberType());
+//
+//		String accessToken = authorizationHeader.split(" ")[1];
+//		JwtToken token = oAuthLoginService.oAuthLogin(accessToken, MemberType.from(oauthLoginRequestDto.getMemberType()));
+//
+//		response.addHeader(JwtProvider.Authorization, "Bearer " + token.accessToken());
+//		Cookie cookie = new Cookie("refresh-token", token.refreshToken());
+//		cookie.setHttpOnly(true);
+//		cookie.setPath("/");
+//		response.addCookie(cookie);
+//
+//		return ResponseEntity.ok("소셜 로그인 성공");
+		return null;
 	}
 }

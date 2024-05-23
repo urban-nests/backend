@@ -14,6 +14,9 @@ import lombok.Setter;
 public class OAuthLoginDto {
 	@Getter
 	@Setter
+	@Builder
+	@NoArgsConstructor
+	@AllArgsConstructor
 	public static class Request {
 		private String memberType;
 	}
